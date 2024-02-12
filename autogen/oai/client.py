@@ -112,7 +112,9 @@ class OpenAIClient:
     def __init__(self, client: Union[OpenAI, AzureOpenAI]):
         self._oai_client = client
         if not isinstance(client, openai.AzureOpenAI) and not is_valid_api_key(self._oai_client.api_key):
-            raise ValueError("Please check the format of the OpenAI API key.")
+            logger.warning(
+                "The API key specified is not a valid OpenAI format; it won't work with the OpenAI-hosted model."
+            )
 
     def message_retrieval(
         self, response: Union[ChatCompletion, Completion]
